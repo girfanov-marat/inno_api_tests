@@ -49,3 +49,7 @@ class BookingData:
 
     def object_to_dict(self):
         return json.loads(json.dumps(self, default=lambda o: o.__dict__))
+
+    def getattrs(self):
+        attrs_dict = self.__dict__
+        return attrs_dict.keys()
