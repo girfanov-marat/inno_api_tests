@@ -27,6 +27,13 @@ class TestCreateBooking:
         res = auth_client.create_booking(data)
         assert res.status_code == 500
 
+    @pytest.mark.parametrize("attr", ["checkin", "checkout"])
+    def test_create_booking_with_empty_bookingdates_fields(self, auth_client, attr):
+        data = BookingData().random()
+        setattr(data.bookingdates, attr, None)
+        res = auth_client.create_booking(data)
+        assert res.status_code == 500
+
     def test_create_booking_with_empty_optional_field(self, auth_client):
         data = BookingData().random()
         setattr(data, "additionalneeds", None)
