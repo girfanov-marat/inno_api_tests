@@ -1,5 +1,7 @@
 import pytest
 
+from common.schema.booking_schema import post_booking_schema
+from common.utils import is_validate
 from model.booking import BookingData
 
 
@@ -10,6 +12,7 @@ class TestCreateBooking:
         assert res.status_code == 200
         booking_info = res.json()
         assert booking_info.get("booking") == data.object_to_dict()
+        assert is_validate(booking_info, post_booking_schema), "Check booking schema"
 
     def test_create_new_booking_unauth_client(self, unauth_client):
         data = BookingData().random()

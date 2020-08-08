@@ -2,7 +2,7 @@ import requests
 
 from model.booking import BookingData
 from model.login_auth import UserData
-from utilities.utils import logging as log
+from common.utils import logging as log
 
 
 class Client:

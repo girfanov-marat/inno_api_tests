@@ -4,7 +4,7 @@ import pytest
 
 from api.client import Client
 from model.login_auth import UserData
-from utilities.logging import setup
+from common.logging import setup
 
 logger = logging.getLogger()
 setup()

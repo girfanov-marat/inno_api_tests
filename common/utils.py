@@ -4,6 +4,8 @@ import pprint
 from functools import wraps
 from json import JSONDecodeError
 
+from schema import Schema, SchemaError
+
 logger = logging.getLogger()
 
 
@@ -37,6 +39,7 @@ def logging(message):
             try:
                 body = res.json()
             except JSONDecodeError:
+                logger.error("500 status code")
                 return res
             if len(res.content) > 20:
                 body_sep = "\n"
@@ -50,3 +53,15 @@ def logging(message):
         return inner
 
     return wrapper
+
+
+def is_validate(data: dict, schema: Schema) -> bool:
+    """
+    Validate json schema
+    :return: True if validation is successful else False
+    """
+    try:
+        schema.validate(data)
+        return True
+    except SchemaError:
+        return False
