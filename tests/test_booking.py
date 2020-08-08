@@ -11,6 +11,14 @@ def test_create_new_booking(auth_client):
     assert booking_info.get("booking") == data.object_to_dict()
 
 
+def test_create_new_booking_unauth_client(unauth_client):
+    data = BookingData().random()
+    res = unauth_client.create_booking(data)
+    assert res.status_code == 200
+    booking_info = res.json()
+    assert booking_info.get("booking") == data.object_to_dict()
+
+
 @pytest.mark.parametrize(
     "attr", ["firstname", "lastname", "totalprice", "depositpaid", "bookingdates"]
 )
