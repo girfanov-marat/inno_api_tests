@@ -7,12 +7,12 @@ from model.login_auth import UserData
 from utilities.logging import setup
 
 logger = logging.getLogger()
+setup()
+logger.setLevel("INFO")
 
 
 @pytest.fixture(scope="session")
 def auth_client(request):
-    setup()
-    logger.setLevel("INFO")
     url = request.config.getoption("--base-url")
     user = request.config.getoption("--username")
     password = request.config.getoption("--password")
