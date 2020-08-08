@@ -2,7 +2,7 @@ import json
 import logging
 import pprint
 from functools import wraps
-
+from json import JSONDecodeError
 
 logger = logging.getLogger()
 
@@ -34,7 +34,10 @@ def logging(message):
             logger.info(log_request)
 
             log_response = f"Response method: {method}, url: {url}, status: {status}"
-            body = res.json()
+            try:
+                body = res.json()
+            except JSONDecodeError:
+                return res
             if len(res.content) > 20:
                 body_sep = "\n"
                 bd = json.dumps(body, indent=4, ensure_ascii=False)
