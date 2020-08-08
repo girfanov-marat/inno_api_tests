@@ -2,6 +2,7 @@ import requests
 
 from model.booking import BookingData
 from model.login_auth import UserData
+from utilities.utils import logging as log
 
 
 class Client:
@@ -23,6 +24,7 @@ class Client:
         self.s.cookies.set_cookie(cookie)
         return res.json().get("token")
 
+    @log("Get booking by id")
     def create_booking(self, data: BookingData):
         data = data.object_to_dict()
         return self.s.post(self.url + "/booking", json=data)
