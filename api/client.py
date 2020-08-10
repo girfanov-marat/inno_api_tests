@@ -11,6 +11,7 @@ class Client:
     def __init__(self, url):
         self.url = url
 
+    @log("Login")
     def auth(self, user_data: UserData):
         data = user_data.__dict__
         return self.s.post(self.url + "/auth", json=data)
@@ -24,7 +25,19 @@ class Client:
         self.s.cookies.set_cookie(cookie)
         return res.json().get("token")
 
-    @log("Get booking by id")
+    @log("Create booking by id")
     def create_booking(self, data: BookingData):
         data = data.object_to_dict()
         return self.s.post(self.url + "/booking", json=data)
+
+    @log("Get booking by id")
+    def get_booking(self, uid: int):
+        return self.s.get(self.url + f"/booking/{uid}")
+
+    @log("Get booking ids")
+    def get_booking_ids(self):
+        return self.s.get(self.url + "/booking")
+
+    @log("Update booking")
+    def update_booking(self, uid: int, data: BookingData):
+        return self.s.put(self.url + f"/booking/{uid}", json=data.object_to_dict())
